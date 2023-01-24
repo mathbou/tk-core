@@ -86,6 +86,11 @@ finally:
     if f:
         f.close()
 
+# Recursively discover all packages in python folder, excluding any tests
+packages =["tank/hooks"]
+packages.extend(find_packages(where="python", exclude=("*.tests", "*.tests.*", "tests.*", "tests", "tank_vendor*")))
+packages.extend(find_packages(where="python", include=("tank_vendor.__init__")))
+
 setup(
     name="sgtk",
     version=get_version(),
@@ -95,15 +100,16 @@ setup(
     url="https://github.com/shotgunsoftware/tk-core",
     install_requires=requirements(),
     license=license,
-    # Recursively discover all packages in python folder, excluding any tests
-    packages=find_packages(
-        "python", exclude=("*.tests", "*.tests.*", "tests.*", "tests")
-    ),
+
+
+    packages=packages,
     # Additional data which must sit in packages folders
     package_data={
         # If any package contains data files, include them:
         "": ["resources/*", ".txt", "*.*"]
     },
     # Everything can be found under the python folder, but installed without it
-    package_dir={"": "python"},
+    package_dir={"": "python",
+                 "tank/hooks": "hooks"},
+
 )
