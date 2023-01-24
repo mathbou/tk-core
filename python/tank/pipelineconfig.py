@@ -1209,9 +1209,7 @@ class PipelineConfiguration(object):
             # no custom hook detected in the pipeline configuration
             # fall back on the hooks that come with the currently running version
             # of the core API.
-            hooks_path = os.path.abspath(
-                os.path.join(os.path.dirname(__file__), "..", "..", "hooks")
-            )
+            hooks_path = hook.get_core_hook_location()
             hook_path = os.path.join(hooks_path, file_name)
 
         try:
@@ -1245,9 +1243,7 @@ class PipelineConfiguration(object):
 
         # first add the built-in core hook to the chain
         file_name = "%s.py" % hook_name
-        hooks_path = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "..", "..", "hooks")
-        )
+        hooks_path = hook.get_core_hook_location()
         hook_paths = [os.path.join(hooks_path, file_name)]
 
         # the hook.method display name used when logging the metric

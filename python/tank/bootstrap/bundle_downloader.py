@@ -32,16 +32,7 @@ class BundleDownloader(object):
         super(BundleDownloader, self).__init__()
 
         # First put our base hook implementation into the array.
-        base_class_path = os.path.normpath(
-            os.path.join(
-                os.path.dirname(__file__),  # ./python/tank/bootstrap
-                "..",  # ./python/tank
-                "..",  # ./python
-                "..",  # ./
-                "hooks",  # ./hooks
-                "bootstrap.py",  # ./hooks/bootstrap.py
-            )
-        )
+        base_class_path = os.path.join(hook.get_core_hook_location(), "bootstrap.py")
         hook_inheritance_chain = [base_class_path]
         # Then, check if there is a config-level override.
         hook_path = os.path.join(

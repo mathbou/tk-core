@@ -89,7 +89,7 @@ finally:
 # Recursively discover all packages in python folder, excluding any tests
 packages =["tank/hooks"]
 packages.extend(find_packages(where="python", exclude=("*.tests", "*.tests.*", "tests.*", "tests", "tank_vendor*")))
-packages.extend(find_packages(where="python", include=("tank_vendor.__init__")))
+packages.extend(find_packages(where="python", include=("tank_vendor*"), exclude=("*.tests", "*.tests.*", "tests.*", "tests", "tank_vendor.*")))
 
 setup(
     name="sgtk",

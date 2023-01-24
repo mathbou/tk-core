@@ -26,6 +26,26 @@ from .errors import (
 
 log = LogManager.get_logger(__name__)
 
+def get_core_hook_location():
+    hook_location = os.path.normpath( # site-packages installation
+        os.path.join(
+            os.path.dirname(__file__),  # ./site-packages/tank
+            "hooks",  # ./site-packages/tank/hooks
+        )
+    )
+    if not all([os.path.exists(hook_location), os.path.isdir(hook_location)]):
+        # Fallback on original repo hook location
+        hook_location = os.path.normpath(
+            os.path.join(
+                os.path.dirname(__file__),  # ./python/tank/bootstrap
+                "..",  # ./python/tank
+                "..",  # ./python
+                "..",  # ./
+                "hooks",  # ./hooks
+            )
+        )
+    return hook_location
+
 
 class Hook(object):
     """
