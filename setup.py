@@ -11,6 +11,9 @@
 # Basic setup.py so tk-core could be installed as
 # a standard Python package
 from __future__ import absolute_import
+
+import sys
+
 from setuptools import setup, find_packages
 import subprocess
 
@@ -47,6 +50,27 @@ def get_version():
     # http://peak.telecommunity.com/DevCenter/setuptools#specifying-your-project-s-version
     return "dev"
 
+def requirements():
+    requirements_ = [
+        "six==1.13.0",
+        "shotgun_api3==3.3.5",
+        "httplib2==0.21.0",
+    ]
+    if sys.version_info.major < 3:
+        requirements_.extend([
+            "ruamel.yaml==0.16.13",
+            "PyYAML==5.4.1",
+        ])
+    else:
+        requirements_.extend([
+            "ruamel.yaml==0.17.21",
+            "PyYAML==6.0",
+        ])
+
+    if sys.platform == "linux":
+        requirements_.append("distro==1.8.0")
+
+    return requirements_
 
 # Retrieve long description and licence from external files
 try:
@@ -69,6 +93,7 @@ setup(
     long_description=readme,
     author="Autodesk, Inc",
     url="https://github.com/shotgunsoftware/tk-core",
+    install_requires=requirements(),
     license=license,
     # Recursively discover all packages in python folder, excluding any tests
     packages=find_packages(
