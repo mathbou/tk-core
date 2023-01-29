@@ -22,4 +22,4 @@ try:
 except ImportError:
     import ruamel_yaml
 
-import sgtk.authentication as shotgun_authentication
+from . import shotgun_authentication
