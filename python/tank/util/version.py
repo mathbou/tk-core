@@ -9,10 +9,10 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from distutils.version import LooseVersion
-from . import sgre as re
+from . import sgre
 from ..errors import TankError
 
-GITHUB_HASH_RE = re.compile("^[0-9a-fA-F]{7,40}$")
+GITHUB_HASH_RE = sgre.compile("^[0-9a-fA-F]{7,40}$")
 
 
 def is_version_head(version):
@@ -107,7 +107,7 @@ def is_version_number(version):
 
     :rtype: bool
     """
-    match = re.match(r"v\d+.\d+.\d+$", version)
+    match = sgre.match(r"v\d+.\d+.\d+$", version)
 
     if match:
         return True
@@ -192,7 +192,7 @@ def _compare_versions(a, b):
         # To mimick the behavior in Python 2.7 as closely as possible, we will
         # If LooseVersion comparison didn't work, try to extract a numeric
         # version from both versions for comparison
-        version_expr = re.compile(r"^((?:\d+)(?:\.\d+)*)(.+)$")
+        version_expr = sgre.compile(r"^((?:\d+)(?:\.\d+)*)(.+)$")
         match_a = version_expr.match(a)
         match_b = version_expr.match(b)
         if match_a and match_b:

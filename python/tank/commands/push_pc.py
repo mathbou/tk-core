@@ -13,8 +13,6 @@ from . import constants
 from ..errors import TankError
 from ..pipelineconfig import PipelineConfiguration
 
-from . import console_utils
-
 from .action_base import Action
 
 from ..util import ShotgunPath
@@ -22,7 +20,7 @@ from ..util import ShotgunPath
 import os
 import datetime
 import shutil
-from tank_vendor.six.moves import input
+from six.moves import input
 
 # Core configuration files which are associated with the core API installation and not
 # the pipeline configuration.

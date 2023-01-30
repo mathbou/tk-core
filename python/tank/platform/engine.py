@@ -23,7 +23,7 @@ import inspect
 import weakref
 import threading
 
-from tank_vendor import six
+import six
 
 from ..util.qt_importer import QtImporter
 from ..util.loader import load_plugin
@@ -38,7 +38,7 @@ from .errors import (
     TankMissingEngineError,
 )
 
-from ..util import sgre as re
+from ..util import sgre
 from ..util.metrics import EventMetric
 from ..util.metrics import MetricsDispatcher
 from ..log import LogManager
@@ -1137,7 +1137,7 @@ class Engine(TankBundle):
         panel_id = "%s_%s" % (current_app.instance_name, panel_name)
         # to ensure the string is safe to use in most engines,
         # sanitize to simple alpha-numeric form
-        panel_id = re.sub(r"\W", "_", panel_id)
+        panel_id = sgre.sub(r"\W", "_", panel_id)
         panel_id = panel_id.lower()
 
         # add it to the list of registered panels

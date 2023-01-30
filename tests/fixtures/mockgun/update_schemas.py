@@ -18,7 +18,7 @@ import sys
 sys.path.insert(0, "../../../python")
 
 from sgtk.authentication import ShotgunAuthenticator
-from tank_vendor.shotgun_api3.lib import mockgun
+from shotgun_api3.lib import mockgun # TODO not rely on sg-api3 vendors
 
 # Log on a site.
 print("This script will update the SG schema for Mockgun.")

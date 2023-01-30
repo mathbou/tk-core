@@ -19,7 +19,7 @@ import os
 import copy
 import threading
 
-from tank_vendor import yaml
+import yaml
 from ..errors import TankError, TankUnreadableFileError, TankFileDoesNotExistError
 
 

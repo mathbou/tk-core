@@ -14,6 +14,7 @@ should implement.
 """
 
 import os
+import re
 import sys
 import glob
 import pprint
@@ -22,7 +23,7 @@ from ..errors import TankError
 from ..log import LogManager
 from ..util.loader import load_plugin
 from ..util.version import is_version_older
-from ..util import ShotgunPath, is_windows, sgre as re
+from ..util import ShotgunPath, is_windows, sgre
 
 from . import constants
 from . import validation
@@ -418,7 +419,7 @@ class SoftwareLauncher(object):
         self.logger.debug("Now matching components with regex: %s" % (regex_pattern,))
 
         # compile the regex
-        executable_regex = re.compile(regex_pattern, re.IGNORECASE)
+        executable_regex = sgre.compile(regex_pattern, re.IGNORECASE)
 
         # iterate over each executable found for the glob pattern and find
         # matched components via the regex

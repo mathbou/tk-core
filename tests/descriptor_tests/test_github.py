@@ -11,8 +11,8 @@
 import mock
 from mock import patch
 import os
-from sgtk.util import sgre as re
-from tank_vendor.six.moves import urllib
+from sgtk.util import sgre
+from six.moves import urllib
 
 import sgtk
 from sgtk.descriptor import Descriptor
@@ -62,7 +62,7 @@ class MockResponse(object):
             # explain the regex better
             header_line_regex = r"(?P<key>[a-zA-Z\-]+): (?P<value>.+)"
             for line in headers_file:
-                m = re.match(header_line_regex, line)
+                m = sgre.match(header_line_regex, line)
                 if m:
                     # keys will be all-lowercase
                     headers[m.group("key").lower()] = m.group("value")

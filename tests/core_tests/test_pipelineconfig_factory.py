@@ -9,7 +9,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import os
-from tank_vendor import yaml
+import yaml
 import sgtk
 import tank
 from tank.api import Tank
@@ -18,8 +18,8 @@ from tank.errors import TankInitError
 from sgtk.util import ShotgunPath
 from tank_test.tank_test_base import TankTestBase, ShotgunTestBase, setUpModule  # noqa
 from mock import patch
-import tank_vendor.six.moves.cPickle as pickle
-from tank_vendor.shotgun_api3.lib import sgsix
+import six.moves.cPickle as pickle
+from shotgun_api3.lib import sgsix # TODO not rely on sg-api3 vendors
 
 
 class TestTankFromPath(TankTestBase):

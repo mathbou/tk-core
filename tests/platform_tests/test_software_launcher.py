@@ -24,7 +24,7 @@ from tank.platform import SoftwareVersion
 from tank.platform import LaunchInformation
 
 from tank.errors import TankEngineInitError
-from tank_vendor import six
+import six
 
 
 class TestEngineLauncher(TankTestBase):

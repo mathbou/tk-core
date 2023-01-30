@@ -17,7 +17,7 @@ import os
 import sys
 import copy
 
-from tank_vendor import yaml
+import yaml
 from .bundle import resolve_default_value
 from . import constants
 from . import environment_includes
@@ -26,8 +26,8 @@ from .errors import TankMissingEnvironmentFile
 
 from ..util.yaml_cache import g_yaml_cache
 from .. import LogManager
-from tank_vendor import six
-from tank_vendor.shotgun_api3.lib import sgsix
+import six
+from shotgun_api3.lib import sgsix # TODO not rely on sg-api3 vendors
 
 logger = LogManager.get_logger(__name__)
 
@@ -861,7 +861,7 @@ class WritableEnvironment(InstalledEnvironment):
                 # which also holds the additional contextual metadata
                 # required by the parse to maintain the lexical integrity
                 # of the content.
-                from tank_vendor import ruamel_yaml
+                import ruamel_yaml
 
                 yaml_data = ruamel_yaml.load(fh, ruamel_yaml.RoundTripLoader)
             else:
@@ -936,7 +936,7 @@ class WritableEnvironment(InstalledEnvironment):
                 # note that safe_dump is not needed when using the
                 # roundtrip dumper, it will adopt a 'safe' behaviour
                 # by default.
-                from tank_vendor import ruamel_yaml
+                import ruamel_yaml
 
                 ruamel_yaml.dump(
                     data,

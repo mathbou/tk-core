@@ -27,8 +27,8 @@ from tank import context
 from tank.errors import TankError, TankContextDeserializationError
 from tank.template import TemplatePath
 from tank.templatekey import StringKey, IntegerKey
-from tank_vendor import yaml
-from tank_vendor import six
+import yaml
+import six
 from tank.authentication import ShotgunAuthenticator
 
 USER_NAME = "Üser Ñâme AñoVolvió JiříVyčítal"

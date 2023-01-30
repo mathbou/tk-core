@@ -20,24 +20,8 @@ some functionality.
 # module and we get an ImportError. Renaming the module to anything else
 # works however, so that's what we are doing.
 
-from tank_vendor import six
+import six
 
-# Import constants and functions that won't be wrapped
-from re import (
-    DEBUG,
-    I,
-    IGNORECASE,
-    L,
-    LOCALE,  # noqa import into namespace
-    M,
-    MULTILINE,
-    S,
-    DOTALL,
-    U,
-    UNICODE,
-    X,
-    VERBOSE,
-)
 from re import escape  # noqa import into namespace
 
 # In Python 3, regular expression metacharacters match unicode characters where in

@@ -15,7 +15,7 @@ SSO/SAML2 Utility functions.
 
 import time
 
-from tank_vendor import shotgun_api3
+import shotgun_api3
 
 from .core.utils import (  # noqa
     get_logger,

@@ -12,7 +12,7 @@
 
 from unittest2 import TestCase, skipIf
 import sgtk
-from tank_vendor import six
+import six
 
 if six.PY2:
     char = "漢字"

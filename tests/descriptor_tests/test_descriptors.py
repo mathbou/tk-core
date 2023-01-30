@@ -31,8 +31,8 @@ from tank.descriptor.descriptor_installed_config import InstalledConfigDescripto
 
 from mock import Mock, patch
 
-from tank_vendor.shotgun_api3.lib.mockgun import Shotgun as Mockgun
-from tank_vendor import yaml
+from shotgun_api3.lib.mockgun import Shotgun as Mockgun # TODO not rely on sg-api3 vendors
+import yaml
 
 
 class TestCachedConfigDescriptor(ShotgunTestBase):

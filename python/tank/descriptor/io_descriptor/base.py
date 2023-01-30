@@ -13,12 +13,12 @@ import contextlib
 
 from .. import constants
 from ... import LogManager
-from ...util import filesystem, sgre as re
+from ...util import filesystem, sgre
 from ...util.version import is_version_newer
 from ..errors import TankDescriptorError, TankMissingManifestError
 
-from tank_vendor import yaml
-from tank_vendor.six.moves import map, urllib
+import yaml
+from six.moves import map, urllib
 
 log = LogManager.get_logger(__name__)
 
@@ -294,15 +294,15 @@ class IODescriptorBase(object):
                 current = current[number]
 
         # now search for the latest version matching our pattern
-        if not re.match("^v([0-9]+|x)(.([0-9]+|x)){2,}$", pattern):
+        if not sgre.match("^v([0-9]+|x)(.([0-9]+|x)){2,}$", pattern):
             raise TankDescriptorError("Cannot parse version expression '%s'!" % pattern)
 
         # split our pattern, beware each part is a string (even integers)
-        version_split = re.findall("([0-9]+|x)", pattern)
+        version_split = sgre.findall("([0-9]+|x)", pattern)
         if "x" in version_split:
             # check that we don't have an incorrect pattern using x
             # then a digit, eg. v4.x.2
-            if re.match(r"^v[0-9\.]+[x\.]+[0-9\.]+$", pattern):
+            if sgre.match(r"^v[0-9\.]+[x\.]+[0-9\.]+$", pattern):
                 raise TankDescriptorError(
                     "Incorrect version pattern '%s'. "
                     "There should be no digit after a 'x'." % pattern

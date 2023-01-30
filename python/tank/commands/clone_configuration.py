@@ -14,7 +14,7 @@ from . import constants
 from ..util import filesystem
 from ..util import is_linux, is_macos, is_windows
 
-from tank_vendor import yaml
+import yaml
 
 from .action_base import Action
 

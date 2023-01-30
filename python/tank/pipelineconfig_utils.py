@@ -17,7 +17,7 @@ from __future__ import with_statement
 
 import os
 
-from tank_vendor import yaml
+import yaml
 
 from . import constants
 from . import LogManager
@@ -262,7 +262,6 @@ def get_core_path_for_config(pipeline_config_path):
     except Exception:
         return None
 
-
 def get_sgtk_module_path():
     """
     Returns the path to ``sgtk`` module. This path can be used by another process to update its
@@ -280,13 +279,11 @@ def get_sgtk_module_path():
     pipelineconfig_utils_py_location = (
         __file__  # tk-core/python/tank/pipelineconfig_utils.py
     )
-
     # If the path is not absolute, make it so.
     if not os.path.isabs(pipelineconfig_utils_py_location):
         pipelineconfig_utils_py_location = os.path.join(
             os.getcwd(), pipelineconfig_utils_py_location
         )
-
     tank_folder = os.path.dirname(
         pipelineconfig_utils_py_location
     )  # tk-core/python/tank

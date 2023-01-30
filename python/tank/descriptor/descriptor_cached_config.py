@@ -12,7 +12,7 @@ from __future__ import with_statement
 
 import os
 
-from tank_vendor import yaml
+import yaml
 
 from . import constants
 from .errors import TankDescriptorError

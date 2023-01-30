@@ -18,7 +18,7 @@ from unittest2 import TestCase
 from sgtk.util import json as tk_json
 from sgtk.util import pickle
 
-from tank_vendor import six
+import six
 
 
 class Impl:

@@ -18,7 +18,7 @@ from tank_test.tank_test_base import setUpModule  # noqa
 
 from tank.authentication import session_cache
 from tank.util import LocalFileStorageManager
-from tank_vendor import yaml
+import yaml
 
 
 class SessionCacheTests(ShotgunTestBase):

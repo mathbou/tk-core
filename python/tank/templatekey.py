@@ -11,14 +11,14 @@
 """
 Classes for fields on TemplatePaths and TemplateStrings
 """
-
+import re
 import sys
 import datetime
 from . import constants
 from .errors import TankError
-from .util import sgre as re
-from tank_vendor import six
-from tank_vendor.six.moves import zip
+from .util import sgre
+import six
+from six.moves import zip
 
 
 class TemplateKey(object):
@@ -97,7 +97,7 @@ class TemplateKey(object):
         self._last_error = ""
 
         # check that the key name doesn't contain invalid characters
-        if not re.match(r"^%s$" % constants.TEMPLATE_KEY_NAME_REGEX, name):
+        if not sgre.match(r"^%s$" % constants.TEMPLATE_KEY_NAME_REGEX, name):
             raise TankError(
                 "%s: Name contains invalid characters. "
                 "Valid characters are %s."
@@ -346,14 +346,14 @@ class StringKey(TemplateKey):
         self._custom_regex_u = None
 
         if self._filter_by == "alphanumeric":
-            self._filter_regex_u = re.compile(r"[\W_]", re.UNICODE)
+            self._filter_regex_u = sgre.compile(r"[\W_]", re.UNICODE)
 
         elif self._filter_by == "alpha":
-            self._filter_regex_u = re.compile(r"[\W_0-9]", re.UNICODE)
+            self._filter_regex_u = sgre.compile(r"[\W_0-9]", re.UNICODE)
 
         elif self._filter_by is not None:
             # filter_by is a regex
-            self._custom_regex_u = re.compile(self._filter_by, re.UNICODE)
+            self._custom_regex_u = sgre.compile(self._filter_by, re.UNICODE)
 
         self._subset_str = subset
         self._subset_format = subset_format
@@ -364,7 +364,7 @@ class StringKey(TemplateKey):
 
         if subset:
             try:
-                self._subset_regex = re.compile(subset, re.UNICODE)
+                self._subset_regex = sgre.compile(subset, re.UNICODE)
             except Exception as e:
                 raise TankError(
                     "Template key %s: Invalid subset regex '%s': %s" % (name, subset, e)
@@ -751,9 +751,9 @@ class IntegerKey(TemplateKey):
     _NON_ZERO_POSITIVE_INTEGER_EXP = r"[1-9]\d*"
     # For the next two regular expressions, the ^ and $ are important to prevent partial matches.
     # Matches an optional 0 followed by a non zero positive integer.
-    _FORMAT_SPEC_RE = re.compile("^(0?)(%s)$" % _NON_ZERO_POSITIVE_INTEGER_EXP)
+    _FORMAT_SPEC_RE = sgre.compile("^(0?)(%s)$" % _NON_ZERO_POSITIVE_INTEGER_EXP)
     # Matches a non zero positive integer.
-    _NON_ZERO_POSITIVE_INTEGER_RE = re.compile("^%s$" % _NON_ZERO_POSITIVE_INTEGER_EXP)
+    _NON_ZERO_POSITIVE_INTEGER_RE = sgre.compile("^%s$" % _NON_ZERO_POSITIVE_INTEGER_EXP)
 
     def __init__(
         self,
@@ -885,7 +885,7 @@ class IntegerKey(TemplateKey):
             # self._minimum_width first. It first matches up to n-1 padding characters. It then
             # matches either a single 0, or an actual multiple digit number that doesn't start with
             # 0.
-            self._strict_validation_re = re.compile(
+            self._strict_validation_re = sgre.compile(
                 "^%s{0,%d}((%s)|0)$"
                 % (
                     "0" if self._zero_padded else " ",
@@ -1121,7 +1121,7 @@ class SequenceKey(IntegerKey):
                 self._last_error = error_msg
                 return False
 
-        elif isinstance(value, six.string_types) and re.match(
+        elif isinstance(value, six.string_types) and sgre.match(
             self.FLAME_PATTERN_REGEX, value
         ):
             # value is matching the flame-style sequence pattern
@@ -1149,7 +1149,7 @@ class SequenceKey(IntegerKey):
             pattern = self._extract_format_string(value)
             return self._resolve_frame_spec(pattern, self.format_spec)
 
-        if isinstance(value, six.string_types) and re.match(
+        if isinstance(value, six.string_types) and sgre.match(
             self.FLAME_PATTERN_REGEX, value
         ):
             # this is a flame style sequence token [1234-56773]
@@ -1167,7 +1167,7 @@ class SequenceKey(IntegerKey):
         if str_value in self._frame_specs:
             return str_value
 
-        if re.match(self.FLAME_PATTERN_REGEX, str_value):
+        if sgre.match(self.FLAME_PATTERN_REGEX, str_value):
             # this is a flame style sequence token [1234-56773]
             return str_value
 

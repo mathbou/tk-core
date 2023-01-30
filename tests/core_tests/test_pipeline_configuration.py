@@ -21,7 +21,7 @@ import tank
 from tank.commands import get_command
 from tank.bootstrap.configuration_writer import ConfigurationWriter
 from tank.descriptor import Descriptor, create_descriptor
-from tank_vendor import yaml
+import yaml
 from tank.util import ShotgunPath, is_linux, is_macos, is_windows
 
 

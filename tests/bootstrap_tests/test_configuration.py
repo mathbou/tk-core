@@ -13,19 +13,19 @@ from __future__ import with_statement
 import uuid
 import os
 import sys
-from mock import patch, Mock
+from mock import patch
 
 from tank_test.tank_test_base import setUpModule  # noqa
 from tank_test.tank_test_base import ShotgunTestBase, TankTestBase, temp_env_var
 
-from tank.bootstrap import constants
 from sgtk.bootstrap.cached_configuration import CachedConfiguration
 from sgtk.bootstrap.configuration import Configuration
 from sgtk.authentication import ShotgunAuthenticator, ShotgunSamlUser
 from sgtk.authentication.user_impl import SessionUser
 import sgtk
-import tank_vendor
-from tank_vendor import yaml
+import yaml
+
+import shotgun_authentication
 
 REPO_ROOT = os.path.normpath(
     os.path.join(
@@ -108,8 +108,8 @@ class TestConfiguration(TestConfigurationBase):
         ):
             # Python 2.6 doesn't support multi-expression with statement, so nest the calls instead.
             with patch(
-                "tank_vendor.shotgun_authentication.deserialize_user",
-                wraps=tank_vendor.shotgun_authentication.deserialize_user,
+                "shotgun_authentication.deserialize_user",
+                wraps=shotgun_authentication.deserialize_user,
             ) as deserialize_wrapper:
                 current_user = self._create_session_user("current_user")
                 configuration._set_authenticated_user(

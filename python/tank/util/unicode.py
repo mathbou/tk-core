@@ -11,7 +11,7 @@
 Utility methods for filtering dictionaries
 """
 
-from tank_vendor import six
+import six
 
 
 def _ensure_contains_str(input_value, visited):

@@ -13,8 +13,8 @@ from __future__ import with_statement, print_function
 import os
 import sys
 import time
-from tank_vendor.six.moves.queue import Empty
-from tank_vendor.six import StringIO
+from six.moves.queue import Empty
+from six import StringIO
 import shutil
 import contextlib
 import logging
@@ -26,13 +26,12 @@ from tank_test.tank_test_base import setUpModule  # noqa
 
 from tank import path_cache
 from tank import folder
-from tank import constants
 from tank import LogManager
 from tank.util import is_windows
 import tank
 
 from tank.util import StorageRoots
-from tank_vendor.six.moves import range
+from six.moves import range
 
 log = LogManager.get_logger(__name__)
 
@@ -1432,7 +1431,7 @@ class TestPathCacheBatchOperation(TankTestBase):
         record_count = list(cursor.execute("select count(*) from shotgun_status"))[0][0]
         self.assertEqual(record_count, 3)
 
-    @patch("tank_vendor.shotgun_api3.lib.mockgun.Shotgun.find")
+    @patch("shotgun_api3.lib.mockgun.Shotgun.find")
     def test_full_shotgun_retrieval(self, find_mock):
         """
         Tests that _get_filesystem_location_entities creates expected query structures
@@ -1481,7 +1480,7 @@ class TestPathCacheBatchOperation(TankTestBase):
 
         self.assertEqual(entities, find_return_payload)
 
-    @patch("tank_vendor.shotgun_api3.lib.mockgun.Shotgun.find")
+    @patch("shotgun_api3.lib.mockgun.Shotgun.find")
     def test_batched_shotgun_retrieval(self, find_mock):
         """
         Tests that _get_filesystem_location_entities creates expected query structures

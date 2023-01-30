@@ -22,14 +22,14 @@ at any point.
 from __future__ import with_statement
 import os
 import socket
-from tank_vendor.shotgun_api3 import (
+from shotgun_api3 import (
     Shotgun,
     AuthenticationFault,
     ProtocolError,
     MissingTwoFactorAuthenticationFault,
 )
-from tank_vendor.shotgun_api3.lib import httplib2
-from tank_vendor import yaml
+import httplib2
+import yaml
 from .errors import AuthenticationError
 from .. import LogManager
 from ..util.shotgun import connection

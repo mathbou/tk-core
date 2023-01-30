@@ -20,8 +20,8 @@ import sgtk
 from sgtk.bootstrap.configuration_writer import ConfigurationWriter
 from sgtk.util import ShotgunPath
 from tank.util import is_macos, is_windows
-from tank_vendor import yaml
-from mock import patch, MagicMock
+import yaml
+from mock import patch
 
 
 class TestConfigurationWriterBase(ShotgunTestBase):

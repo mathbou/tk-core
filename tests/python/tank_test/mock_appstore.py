@@ -14,23 +14,14 @@ Unit tests tank updates.
 
 from __future__ import with_statement
 
-import os
-import logging
 import functools
-import tempfile
 
 import mock
 
-from .tank_test_base import TankTestBase, setUpModule
-
-import sgtk
 from sgtk.descriptor import Descriptor
 from sgtk.descriptor.io_descriptor.base import IODescriptorBase
-from sgtk.descriptor import create_descriptor
-from sgtk.util import sgre as re
+from sgtk.util import sgre
 
-from tank import TankError
-from tank.platform.environment import InstalledEnvironment
 from distutils.version import LooseVersion
 
 
@@ -45,7 +36,7 @@ class MockStore(object):
         Mocks a bundle type.
         """
 
-        _version_regex = re.compile(r"v([0-9]+)\.([0-9]+)\.(.*)")
+        _version_regex = sgre.compile(r"v([0-9]+)\.([0-9]+)\.(.*)")
 
         def __init__(self, name, version, dependencies=[], bundle_type=None):
             """

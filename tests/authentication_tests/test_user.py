@@ -12,7 +12,6 @@
 
 from __future__ import with_statement
 import base64
-import pytest
 
 from tank_test.tank_test_base import setUpModule  # noqa
 from tank_test.tank_test_base import ShotgunTestBase
@@ -20,8 +19,8 @@ from tank_test.tank_test_base import ShotgunTestBase
 from mock import patch
 
 from tank.authentication import user, user_impl, errors
-from tank_vendor.shotgun_api3 import AuthenticationFault
-from tank_vendor import six
+from shotgun_api3 import AuthenticationFault
+import six
 
 # Create a set of valid cookies, for SSO and Web related tests.
 # For a Web session, we detect the presence of the shotgun_current_session_expiration cookie.
@@ -207,8 +206,8 @@ class UserTests(ShotgunTestBase):
             }
             user_impl.ScriptUser.from_dict(script_user_with_unknown_data)
 
-    @patch("tank_vendor.shotgun_api3.Shotgun.server_caps")
-    @patch("tank_vendor.shotgun_api3.Shotgun._call_rpc")
+    @patch("shotgun_api3.Shotgun.server_caps")
+    @patch("shotgun_api3.Shotgun._call_rpc")
     @patch("tank.authentication.interactive_authentication.renew_session")
     def test_refresh_credentials_failure(
         self, renew_session_mock, call_rpc_mock, server_caps_mock
@@ -228,8 +227,8 @@ class UserTests(ShotgunTestBase):
         with self.assertRaises(AuthenticationFault):
             sg._call_rpc()
 
-    @patch("tank_vendor.shotgun_api3.Shotgun.server_caps")
-    @patch("tank_vendor.shotgun_api3.Shotgun._call_rpc")
+    @patch("shotgun_api3.Shotgun.server_caps")
+    @patch("shotgun_api3.Shotgun._call_rpc")
     @patch("tank.authentication.interactive_authentication.renew_session")
     def test_refresh_credentials_on_old_connection(
         self, renew_session_mock, call_rpc_mock, server_caps_mock
@@ -307,7 +306,7 @@ class UserTests(ShotgunTestBase):
         ):
             user = factory()
             # When the user can't be found, an error should be raised.
-            with pytest.raises(error_type):
+            with self.assertRaises(error_type) :
                 user.resolve_entity()
 
             entity = self.mockgun.create(entity_type, {field_name: field_value})

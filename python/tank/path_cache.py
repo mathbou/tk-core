@@ -16,16 +16,14 @@ all Tank items in the file system are kept.
 
 import collections
 import sqlite3
-import sys
 import os
 import itertools
 
 # use api json to cover py 2.5
-# todo - replace with proper external library
-from tank_vendor import shotgun_api3
-from tank_vendor import six
-from tank_vendor.shotgun_api3.lib import sgsix
-from tank_vendor.six.moves import range
+import shotgun_api3
+import six
+from shotgun_api3.lib import sgsix # TODO not rely on sg-api3 vendors
+from six.moves import range
 
 json = shotgun_api3.shotgun.json
 

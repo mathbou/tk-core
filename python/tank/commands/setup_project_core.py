@@ -18,8 +18,8 @@ from ..util import StorageRoots
 from ..util import filesystem
 from ..api import sgtk_from_path
 
-from tank_vendor import yaml
-from tank_vendor.shotgun_api3.lib import sgsix
+import yaml
+from shotgun_api3.lib import sgsix # TODO not rely on sg-api3 vendors
 
 
 @filesystem.with_cleared_umask

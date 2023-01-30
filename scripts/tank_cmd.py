@@ -29,7 +29,7 @@ from tank.commands.action_base import Action
 from tank.util import shotgun
 from tank.util import shotgun_entity
 from tank.util import is_windows
-from tank.util import sgre as re
+from tank.util import sgre
 from tank.platform import constants as platform_constants
 from tank.authentication import ShotgunAuthenticator
 from tank.authentication import AuthenticationError
@@ -38,12 +38,12 @@ from tank.authentication import AuthenticationCancelled
 from tank.authentication import IncompleteCredentials
 from tank.authentication import CoreDefaultsManager
 from tank.commands import constants as command_constants
-from tank_vendor import yaml
-from tank_vendor.shotgun_api3.lib.sgsix import normalize_platform
+import yaml
+from shotgun_api3.lib.sgsix import normalize_platform # TODO not rely on sg-api3 vendors
 from tank.platform import engine
 from tank import pipelineconfig_utils
 from tank import LogManager
-from tank_vendor import six
+import six
 
 # the logger used by this file is sgtk.tank_cmd
 logger = LogManager.get_logger("tank_cmd")
@@ -1184,7 +1184,7 @@ def _resolve_shotgun_entity(entity_type, entity_search_token, constrain_by_proje
             chars_available = 70  # description max len is 70
 
             # clever regex to chop on word boundaries
-            chopped_desc = re.match(r"(.{,%d})(\W|$)" % chars_available, desc).group(1)
+            chopped_desc = sgre.match(r"(.{,%d})(\W|$)" % chars_available, desc).group(1)
             if len(chopped_desc) < len(desc):
                 chopped_desc += "..."
 

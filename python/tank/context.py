@@ -17,13 +17,12 @@ import os
 import copy
 import json
 
-from tank_vendor import yaml
+import yaml
 from . import authentication
 
 from .util import login
 from .util import shotgun_entity
 from .util import shotgun
-from .util import get_sg_entity_name_field
 from .util import pickle, json as sgjson
 from . import constants
 from .errors import TankError, TankContextDeserializationError

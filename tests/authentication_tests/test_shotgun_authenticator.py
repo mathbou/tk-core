@@ -13,7 +13,7 @@ from mock import patch
 import os
 import base64
 
-from tank_vendor import six
+import six
 
 from tank_test.tank_test_base import ShotgunTestBase
 from tank_test.tank_test_base import setUpModule  # noqa
@@ -44,7 +44,7 @@ class CustomDefaultManager(DefaultsManager):
 
 
 class ShotgunAuthenticatorTests(ShotgunTestBase):
-    @patch("tank_vendor.shotgun_api3.Shotgun.server_caps")
+    @patch("shotgun_api3.Shotgun.server_caps")
     @patch("tank.authentication.session_cache.generate_session_token")
     @patch("tank.util.LocalFileStorageManager.get_global_root")
     def test_create_session_user(
@@ -126,7 +126,7 @@ class ShotgunAuthenticatorTests(ShotgunTestBase):
         connection = session_user.create_sg_connection()
         self.assertEqual(connection.config.session_token, "session_token")
 
-    @patch("tank_vendor.shotgun_api3.Shotgun.server_caps")
+    @patch("shotgun_api3.Shotgun.server_caps")
     def test_create_script_user(self, server_caps_mock):
         """
         Makes sure that create_script_user does correct input validation.

@@ -28,13 +28,11 @@ c:\foo\bar\hello.yml - absolute path, windows
 
 """
 
-import os
-
 from .errors import TankError
 from . import constants
 from .util import yaml_cache
 from .util.includes import resolve_include
-from tank_vendor import six
+import six
 
 
 def _get_includes(file_name, data):

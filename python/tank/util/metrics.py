@@ -22,14 +22,13 @@ are not part of the public Sgtk API.
 from collections import deque
 from threading import Event, Thread, Lock
 import platform
-from tank_vendor.six.moves import urllib
-from tank_vendor import six
+from six.moves import urllib
 from copy import deepcopy
 
-from . import constants, sgre as re
+from . import constants, sgre
 
 # use api json to cover py 2.5
-from tank_vendor import shotgun_api3, six
+import shotgun_api3, six
 
 json = shotgun_api3.shotgun.json
 
@@ -42,7 +41,7 @@ json = shotgun_api3.shotgun.json
 if six.PY2:
     import platform as distro
 else:
-    from tank_vendor import distro
+    import distro
 
 ###############################################################################
 
@@ -78,7 +77,7 @@ class PlatformInfo(object):
             # We do want to limit the number of possible OS version variant we get metrics for.
             #
             # For macOS / OSX we keep only the Major.minor
-            os_version = re.findall(r"\d*\.\d*", raw_version_str)[0]
+            os_version = sgre.findall(r"\d*\.\d*", raw_version_str)[0]
 
         except:
             pass
@@ -101,7 +100,7 @@ class PlatformInfo(object):
             raw_version_str = six.ensure_str(distro.linux_distribution()[1])
 
             # For Linux we really just want the 'major' version component
-            major_version_str = re.findall(r"\d*", raw_version_str)[0]
+            major_version_str = sgre.findall(r"\d*", raw_version_str)[0]
             os_version = "%s %s" % (distribution, major_version_str)
 
         except:

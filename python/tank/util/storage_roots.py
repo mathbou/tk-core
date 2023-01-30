@@ -10,7 +10,7 @@
 
 import os
 
-from tank_vendor import yaml
+import yaml
 
 from .. import LogManager
 from ..errors import TankError

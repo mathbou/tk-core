@@ -27,12 +27,12 @@ from .errors import (
     AuthenticationCancelled,
     ConsoleLoginNotSupportedError,
 )
-from tank_vendor.shotgun_api3 import MissingTwoFactorAuthenticationFault
+from shotgun_api3 import MissingTwoFactorAuthenticationFault
 from .sso_saml2 import is_sso_enabled_on_site
 from ..util.shotgun.connection import sanitize_url
 
 from getpass import getpass
-from tank_vendor.six.moves import input
+from six.moves import input
 
 logger = LogManager.get_logger(__name__)
 

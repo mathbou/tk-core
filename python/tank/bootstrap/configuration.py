@@ -263,7 +263,7 @@ class Configuration(object):
         # module, so try to import.
         try:
             # Use backwards compatible imports.
-            from tank_vendor.shotgun_authentication import (
+            from shotgun_authentication import (
                 ShotgunAuthenticator,
                 deserialize_user,
             )

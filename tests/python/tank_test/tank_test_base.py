@@ -29,7 +29,7 @@ from functools import wraps
 
 from collections import defaultdict
 
-from tank_vendor.shotgun_api3.lib import mockgun
+from shotgun_api3.lib import mockgun # TODO not rely on sg-api3 vendors
 
 import unittest2 as unittest
 import mock
@@ -37,7 +37,7 @@ import mock
 import sgtk
 import tank
 from tank import path_cache, pipelineconfig_factory
-from tank_vendor import yaml
+import yaml
 from tank.util import is_windows
 from tank.util.user_settings import UserSettings
 

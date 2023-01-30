@@ -23,7 +23,7 @@ from . import constants
 from . import pipelineconfig_utils
 from .pipelineconfig import PipelineConfiguration
 from .util import LocalFileStorageManager
-from tank_vendor import six
+import six
 
 log = LogManager.get_logger(__name__)
 

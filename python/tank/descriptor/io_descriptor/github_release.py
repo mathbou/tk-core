@@ -10,12 +10,12 @@
 
 import json
 import os
-from tank_vendor.six.moves import urllib
+from six.moves import urllib
 
 from .downloadable import IODescriptorDownloadable
 from ..errors import TankError, TankDescriptorError
 from ... import LogManager
-from ...util import sgre as re
+from ...util import sgre
 from ...util.shotgun import download
 
 log = LogManager.get_logger(__name__)
@@ -141,7 +141,7 @@ class IODescriptorGithubRelease(IODescriptorDownloadable):
             response = urllib.request.urlopen(url)
             response_data = json.load(response)
             log.debug("Got a valid JSON response from Github API.")
-            m = re.search(r"<(.+)>; rel=\"next\"", response.headers.get("link", ""))
+            m = sgre.search(r"<(.+)>; rel=\"next\"", response.headers.get("link", ""))
             if m:
                 next_link = m.group(1)
                 log.debug(

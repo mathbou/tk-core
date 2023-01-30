@@ -18,9 +18,9 @@ from . import constants
 from ..descriptor import create_descriptor, Descriptor
 from .errors import TankBootstrapError, TankMissingTankNameError
 
-from ..util import filesystem, version
+from ..util import filesystem
 
-from tank_vendor import yaml
+import yaml
 from .configuration import Configuration
 from .configuration_writer import ConfigurationWriter
 from .. import LogManager

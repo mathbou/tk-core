@@ -15,9 +15,8 @@ called.
 
 from tank import Hook
 import os
-import sys
 import shutil
-from tank_vendor import six
+import six
 from tank.util import is_windows
 
 

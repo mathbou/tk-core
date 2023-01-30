@@ -16,7 +16,7 @@ import sys
 from mock import patch, Mock
 import sgtk
 from sgtk.util import ShotgunPath
-from tank_vendor.shotgun_api3.lib import sgsix
+from shotgun_api3.lib import sgsix # TODO not rely on sg-api3 vendors
 
 from tank_test.tank_test_base import setUpModule  # noqa
 from tank_test.tank_test_base import TankTestBase, temp_env_var
@@ -315,7 +315,7 @@ class TestFallbackHandling(TestResolverBase):
             "name": "tk-config-test",
         }
 
-    @patch("tank_vendor.shotgun_api3.lib.mockgun.Shotgun.find")
+    @patch("shotgun_api3.lib.mockgun.Shotgun.find")
     def test_resolve_base_config(self, find_mock):
         """
         Tests the direct config resolve, which doesn't talk to Shotgun
@@ -327,7 +327,7 @@ class TestFallbackHandling(TestResolverBase):
         # make sure we didn't talk to shotgun
         self.assertEqual(find_mock.called, False)
 
-    @patch("tank_vendor.shotgun_api3.lib.mockgun.Shotgun.find")
+    @patch("shotgun_api3.lib.mockgun.Shotgun.find")
     def test_resolve_latest_base_config(self, find_mock):
         """
         Tests the direct config resolve for a descriptor with no version number set
@@ -352,7 +352,7 @@ class TestAutoUpdate(TestResolverBase):
         self.resolver._plugin_id = 'basic.desktop'
 
     @patch("sys.version_info", return_value=Mock())
-    @patch("tank_vendor.shotgun_api3.lib.mockgun.Shotgun.find")
+    @patch("shotgun_api3.lib.mockgun.Shotgun.find")
     def test_autoupdate_config(self, find_mock, _):
         """
         Tests that the configuration resolved is the maximum tk-config-basic

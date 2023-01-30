@@ -16,15 +16,13 @@ import datetime
 
 from . import constants
 
-from ..descriptor import Descriptor, create_descriptor, is_descriptor_version_missing
-
 from ..util import filesystem
 from ..util import StorageRoots
 from ..util.shotgun import connection
 from ..util.move_guard import MoveGuard
 from ..util import is_macos, is_windows
 
-from tank_vendor import yaml
+import yaml
 
 from .. import LogManager
 

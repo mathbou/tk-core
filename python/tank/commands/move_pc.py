@@ -15,8 +15,8 @@ from .action_base import Action
 
 import os
 import shutil
-from tank_vendor.shotgun_api3.lib import sgsix
-from tank_vendor.six.moves import input
+from shotgun_api3.lib import sgsix # TODO not rely on sg-api3 vendors
+from six.moves import input
 
 
 class MovePCAction(Action):

@@ -18,7 +18,8 @@ at any point.
 --------------------------------------------------------------------------------
 """
 
-from tank.util import sgre as re
+from tank.util import sgre
+import re
 
 from .qt_abstraction import QtGui
 
@@ -34,7 +35,7 @@ class FuzzyMatcher():
         # construct a pattern that matches the letters in order
         # for example "aad" turns into "(a).*?(a).*?(d)".
         re_pattern = ".*?".join("(%s)" % re.escape(char) for char in pattern)
-        self._re = re.compile(re_pattern, re.IGNORECASE)
+        self._re = sgre.compile(re_pattern, re.IGNORECASE)
 
     def score(self, string):
         match = self._re.search(string)

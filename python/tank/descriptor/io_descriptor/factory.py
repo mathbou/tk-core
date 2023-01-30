@@ -14,7 +14,7 @@ from ..errors import TankDescriptorError
 from .base import IODescriptorBase
 
 from ... import LogManager
-from tank_vendor import six
+import six
 
 log = LogManager.get_logger(__name__)
 
