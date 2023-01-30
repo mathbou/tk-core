@@ -11,6 +11,9 @@
 import os
 import tempfile
 import uuid
+
+import six
+
 import sgtk
 import tank
 
@@ -157,7 +160,7 @@ class TestApi(ShotgunTestBase):
         )
 
         # test opting out of the local fallback
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             tank.descriptor.TankDescriptorError, "Could not get latest version of"
         ):
             sgtk.descriptor.create_descriptor(

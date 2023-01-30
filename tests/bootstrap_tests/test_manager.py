@@ -11,6 +11,8 @@
 from __future__ import with_statement
 import os
 
+import six
+
 import sgtk
 from mock import patch, Mock
 
@@ -31,7 +33,7 @@ class TestErrorHandling(ShotgunTestBase):
         def find_mock_impl(*args, **kwargs):
             mgr = ToolkitManager()
             mgr.pipeline_configuration = 1
-            with self.assertRaisesRegex(
+            with six.assertRaisesRegex(self,
                 sgtk.bootstrap.TankBootstrapError,
                 "Can't enumerate pipeline configurations matching a specific id.",
             ):

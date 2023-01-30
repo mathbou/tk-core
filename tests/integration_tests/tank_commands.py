@@ -18,7 +18,9 @@ import os
 import re
 import shutil
 
-import unittest2
+import unittest
+
+import six
 from mock import Mock, patch
 from tank.util import is_linux, is_macos, is_windows, filesystem
 from tank.util import yaml_cache, zip
@@ -208,8 +210,8 @@ class TankCommands(SgtkIntegrationTest):
         output = self.run_tank_cmd(
             self.pipeline_location, "updates", user_input=("y", "a")
         )
-        self.assertRegex(output, r"(.*) (.*) was updated from (.*) to (.*)")
-        self.assertRegex(output, r"(.*) .* was updated from .* to .*")
+        six.assertRegex(self, self, output, r"(.*) (.*) was updated from (.*) to (.*)")
+        six.assertRegex(self, self, output, r"(.*) .* was updated from .* to .*")
 
     def test_06_install_engine(self):
         """
@@ -220,7 +222,7 @@ class TankCommands(SgtkIntegrationTest):
             "install_engine",
             extra_cmd_line_arguments=["project", "tk-maya"],
         )
-        self.assertRegex(output, r"Engine Installation Complete!")
+        six.assertRegex(self, self, output, r"Engine Installation Complete!")
 
     def test_07_install_app(self):
         """
@@ -231,7 +233,7 @@ class TankCommands(SgtkIntegrationTest):
             "install_app",
             extra_cmd_line_arguments=["project", "tk-maya", "tk-multi-launchapp"],
         )
-        self.assertRegex(output, r"App Installation Complete!")
+        six.assertRegex(self, self, output, r"App Installation Complete!")
 
     def test_08_app_info(self):
         """
@@ -299,15 +301,15 @@ class TankCommands(SgtkIntegrationTest):
         if "ERROR:" in output:
             raise ValueError("Getting validation errors.")
         else:
-            self.assertRegex(output, r"Validating Engine project / tk-maya...")
-            self.assertRegex(
+            six.assertRegex(self, self, output, r"Validating Engine project / tk-maya...")
+            six.assertRegex(self, self,
                 output, r"Validating project / tk-maya / tk-multi-launchapp..."
             )
-            self.assertRegex(
+            six.assertRegex(self, self,
                 output,
                 r"The following templates are not being used directly in any environments:",
             )
-            self.assertRegex(
+            six.assertRegex(self, self,
                 output,
                 r"The following hooks are not being used directly in any environments:",
             )
@@ -318,11 +320,11 @@ class TankCommands(SgtkIntegrationTest):
         """
         output = self.run_tank_cmd(self.pipeline_location, "core", user_input=("y"))
         # Since we are using a core branch we can't do a core update.
-        self.assertRegex(
+        six.assertRegex(self, self,
             output,
             r"You are currently running version HEAD of the SG Pipeline Toolkit",
         )
-        self.assertRegex(
+        six.assertRegex(self, self,
             output, r"No need to update the Toolkit Core API at this time!"
         )
 
@@ -331,7 +333,7 @@ class TankCommands(SgtkIntegrationTest):
         Runs tank upgrade_folders on the project.
         """
         output = self.run_tank_cmd(self.pipeline_location, "upgrade_folders")
-        self.assertRegex(
+        six.assertRegex(self, self,
             output, r"Looks like syncing is already turned on! Nothing to do!"
         )
 
@@ -403,8 +405,8 @@ class TankCommands(SgtkIntegrationTest):
             "synchronize_folders",
             extra_cmd_line_arguments=["--full"],
         )
-        self.assertRegex(output, r"Doing a full sync.")
-        self.assertRegex(output, r"Local folder information has been synchronized.")
+        six.assertRegex(self, output, r"Doing a full sync.")
+        six.assertRegex(self, output, r"Local folder information has been synchronized.")
 
     def _parse_filenames(self, output):
         """
@@ -440,10 +442,10 @@ class TankCommands(SgtkIntegrationTest):
         expected_folders = self._get_expected_folders()
 
         # Validate preview_folders output
-        self.assertRegex(
+        six.assertRegex(self, 
             output, "In total, %s folders were processed." % len(expected_folders)
         )
-        self.assertRegex(
+        six.assertRegex(self, 
             output, r"Note - this was a preview and no actual folders were created."
         )
         self.assertEqual(expected_folders, self._parse_filenames(output))
@@ -461,7 +463,7 @@ class TankCommands(SgtkIntegrationTest):
         expected_folders = self._get_expected_folders()
 
         # Validate preview_folders output
-        self.assertRegex(
+        six.assertRegex(self, 
             output, "In total, %s folders were processed." % len(expected_folders)
         )
         self.assertEqual(expected_folders, self._parse_filenames(output))
@@ -493,7 +495,7 @@ class TankCommands(SgtkIntegrationTest):
                 ).format(self.step["short_name"]),
             ]
         )
-        self.assertRegex(output, r"Unregister complete. 2 paths were unregistered.")
+        six.assertRegex(self, output, r"Unregister complete. 2 paths were unregistered.")
         self.assertEqual(expected_folders, self._parse_filenames(output))
 
         fsl = self.sg.find("FilesystemLocation", [["project", "is", self.project]])
@@ -520,7 +522,7 @@ class TankCommands(SgtkIntegrationTest):
                 ).format(self.step["short_name"]),
             ]
         )
-        self.assertRegex(output, r"Unregister complete. 3 paths were unregistered.")
+        six.assertRegex(self, output, r"Unregister complete. 3 paths were unregistered.")
         self.assertEqual(expected_folders, self._parse_filenames(output))
 
         fsl = self.sg.find("FilesystemLocation", [["project", "is", self.project]])
@@ -528,4 +530,4 @@ class TankCommands(SgtkIntegrationTest):
 
 
 if __name__ == "__main__":
-    ret_val = unittest2.main(failfast=True, verbosity=2)
+    ret_val = unittest.main(failfast=True, verbosity=2)

@@ -31,7 +31,7 @@ from collections import defaultdict
 
 from shotgun_api3.lib import mockgun # TODO not rely on sg-api3 vendors
 
-import unittest2 as unittest
+import unittest
 import mock
 
 import sgtk
@@ -1275,7 +1275,6 @@ def _move_data(path):
                     except WindowsError:
                         time.sleep(count * 2)
             os.rename(path, backup_path)
-
 
 class ShotgunTestBase(TankTestBase):
     """

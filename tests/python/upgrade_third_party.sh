@@ -57,7 +57,7 @@ def main():
     # Ensures other modules required by the unit tests work!
     try:
         import mock
-        import unittest2
+        import unittest
         import coverage
         print("Upgrade successful!")
         print()

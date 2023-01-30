@@ -10,7 +10,7 @@
 
 from __future__ import with_statement
 import threading
-import unittest2 as unittest
+import unittest as unittest
 
 from mock import patch
 
@@ -236,7 +236,7 @@ class ConnectionSettingsTestCases:
 
             # Prevents from connecting to Shotgun.
             self._server_caps_mock = patch(
-                "tank_vendor.shotgun_api3.Shotgun.server_caps"
+                "shotgun_api3.Shotgun.server_caps"
             )
             self._server_caps_mock.start()
             self.addCleanup(self._server_caps_mock.stop)

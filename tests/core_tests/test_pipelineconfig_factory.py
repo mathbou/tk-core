@@ -9,6 +9,8 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 import os
+
+import six
 import yaml
 import sgtk
 import tank
@@ -81,7 +83,7 @@ class TestArchivedProjects(TankTestBase):
         """
         Tests that archived projects are not visible
         """
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankInitError,
             "No pipeline configurations associated with Project %s"
             % self.project["id"],
@@ -143,7 +145,7 @@ class TestTankFromEntity(TankTestBase):
         """
         Test from project which does not have a pipeline configuration
         """
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankInitError,
             "No pipeline configurations associated with Project 1791284",
             sgtk.sgtk_from_entity,
@@ -155,7 +157,7 @@ class TestTankFromEntity(TankTestBase):
         """
         Test from project which does not have a pipeline configuration
         """
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankInitError,
             ".* is not associated with a project",
             sgtk.sgtk_from_entity,
@@ -189,7 +191,7 @@ class TestTankFromEntity(TankTestBase):
         """
         Test from project which does not have a pipeline configuration
         """
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankInitError,
             "No pipeline configurations associated with Project %s"
             % self.other_project["id"],
@@ -202,7 +204,7 @@ class TestTankFromEntity(TankTestBase):
         """
         Test from shot which does not have a pipeline configuration
         """
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankInitError,
             "No pipeline configurations associated with Shot %s"
             % self.other_shot["id"],
@@ -236,7 +238,7 @@ class TestTankFromPathDuplicatePcPaths(TankTestBase):
         """
         Test primary dupes
         """
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankInitError,
             ".* is associated with more than one centralized Primary pipeline configuration",
             sgtk.sgtk_from_path,
@@ -247,7 +249,7 @@ class TestTankFromPathDuplicatePcPaths(TankTestBase):
         """
         Test primary dupes
         """
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankInitError,
             ".* is associated with more than one centralized Primary pipeline configuration",
             sgtk.sgtk_from_entity,
@@ -283,7 +285,7 @@ class TestSharedCoreWithSiteWideConfigs(TankTestBase):
             self.pipeline_configuration.get_shotgun_id(),
             {"code": "Secondary"},
         )
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankInitError, "does not have a Primary pipeline configuration!"
         ):
             sgtk.sgtk_from_path(self.project_root)
@@ -298,7 +300,7 @@ class TestSharedCoreWithSiteWideConfigs(TankTestBase):
             {"windows_path": None, "linux_path": None, "mac_path": None},
         )
         # We do not support site-wide pipeline configurations from shared cores.
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankInitError,
             "cannot be instantiated because it is a distributed config. "
             "To launch this kind of configuration, use the Bootstrap API instead.",
@@ -580,7 +582,7 @@ class TestTankFromWithSiteConfig(TankTestBase):
             )
 
             self._invalidate_pipeline_configuration_yml()
-            with self.assertRaisesRegex(
+            with six.assertRaisesRegex(self,
                 TankInitError,
                 "however that is not associated with the pipeline configuration",
             ):
@@ -601,7 +603,7 @@ class TestTankFromWithSiteConfig(TankTestBase):
             )
 
             self._invalidate_pipeline_configuration_yml()
-            with self.assertRaisesRegex(
+            with six.assertRaisesRegex(self,
                 TankInitError,
                 "however that is not associated with the pipeline configuration",
             ):
@@ -834,7 +836,7 @@ class TestTankFromPathOverlapStorage(TankTestBase):
         if not os.path.exists(test_path_dir):
             os.makedirs(test_path_dir)
 
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankInitError,
             ".* is associated with more than one centralized Primary pipeline configuration",
             sgtk.sgtk_from_path,

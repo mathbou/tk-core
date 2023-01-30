@@ -9,6 +9,8 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 from __future__ import with_statement
+
+import six
 from mock import patch
 
 from tank_test.tank_test_base import ShotgunTestBase
@@ -81,7 +83,7 @@ class ShotgunWrapperTests(ShotgunTestBase):
         user = user_impl.SessionUser(
             "https://host.shotgunstudio.com", "login", "session", "proxy"
         )
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             ShotgunAuthenticationError, "This is coming from renew_session_mock."
         ):
             user.create_sg_connection()._call_rpc()

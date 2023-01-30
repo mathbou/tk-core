@@ -14,7 +14,7 @@ import json
 import os
 import sys
 
-from unittest2 import TestCase
+from unittest import TestCase
 from sgtk.util import json as tk_json
 from sgtk.util import pickle
 
@@ -111,7 +111,7 @@ class Impl:
                 self._assert_no_unicode(self.kanji)
                 self._assert_no_unicode({"k": "v"})
 
-                with self.assertRaisesRegex(
+                with six.assertRaisesRegex(self,
                     Exception, "unicode string found in u'allo'"
                 ):
                     self._assert_no_unicode(u"allo")
@@ -123,7 +123,7 @@ class Impl:
                 self._assert_no_bytes(self.kanji)
                 self._assert_no_bytes({"k": "v"})
 
-                with self.assertRaisesRegex(Exception, "bytes found in b'allo'"):
+                with six.assertRaisesRegex(self, Exception, "bytes found in b'allo'"):
                     self._assert_no_bytes(b"allo")
 
         def test_scalar_values(self):

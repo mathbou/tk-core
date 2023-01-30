@@ -11,6 +11,7 @@
 from __future__ import with_statement
 import os
 
+import six
 from mock import patch
 
 import tank
@@ -91,7 +92,7 @@ class TestShotgunRegisterPublish(TankTestBase):
             else:
                 local_path = "/tmp/nix/path/to/file.txt"
 
-            with self.assertRaisesRegex(
+            with six.assertRaisesRegex(self,
                 tank.util.ShotgunPublishError,
                 "Local File Linking seems to be turned off",
             ):

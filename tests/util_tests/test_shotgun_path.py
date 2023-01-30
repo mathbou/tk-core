@@ -10,6 +10,7 @@
 
 from __future__ import with_statement
 
+import six
 from tank_test.tank_test_base import setUpModule  # noqa
 from tank_test.tank_test_base import ShotgunTestBase
 
@@ -261,7 +262,7 @@ class TestShotgunPath(ShotgunTestBase):
             ShotgunPath.get_file_name_from_template("/%s.yml", "darwin"), "/Darwin.yml"
         )
 
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             ValueError, "Cannot resolve file name - unsupported os platform 'potato'"
         ):
             ShotgunPath.get_file_name_from_template("/%s.yml", "potato")

@@ -18,14 +18,14 @@ import sys
 import os
 
 import traceback
-import unittest2
+import unittest
 from sgtk_integration_test import SgtkIntegrationTest
 import sgtk
 
 logger = sgtk.LogManager.get_logger(__name__)
 
 
-@unittest2.skipIf(
+@unittest.skipIf(
     sys.version_info[0] > 2, "tk-config-basic is not Python 3 compatible."
 )
 class MultipleBootstrapAcrossCoreSwap(SgtkIntegrationTest):
@@ -94,4 +94,4 @@ class MultipleBootstrapAcrossCoreSwap(SgtkIntegrationTest):
 
 
 if __name__ == "__main__":
-    ret_val = unittest2.main(failfast=True, verbosity=2)
+    ret_val = unittest.main(failfast=True, verbosity=2)

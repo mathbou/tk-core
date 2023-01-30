@@ -23,7 +23,7 @@ import threading
 import time
 import copy
 
-import unittest2
+import unittest
 
 import sgtk
 from sgtk.util import sgre
@@ -33,7 +33,7 @@ from shotgun_api3.lib import sgsix # TODO not rely on sg-api3 vendors
 import yaml
 
 
-class SgtkIntegrationTest(unittest2.TestCase):
+class SgtkIntegrationTest(unittest.TestCase):
     """
     Base class for integration tests. Each integration test should be invoke in its own subprocess.
 
@@ -147,8 +147,8 @@ class SgtkIntegrationTest(unittest2.TestCase):
         """
         Converts a string from CamelCase to snake_case.
         """
-        str1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", text)
-        return re.sub("([a-z0-9])([A-Z])", r"\1_\2", str1).lower()
+        str1 = sgre.sub("(.)([A-Z][a-z]+)", r"\1_\2", text)
+        return sgre.sub("([a-z0-9])([A-Z])", r"\1_\2", str1).lower()
 
     @classmethod
     def _cleanup_temp_dir(cls):

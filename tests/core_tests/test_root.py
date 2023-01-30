@@ -13,6 +13,7 @@ from __future__ import with_statement
 import os
 import copy
 
+import six
 import yaml
 from tank_test.tank_test_base import TankTestBase, setUpModule  # noqa
 
@@ -141,7 +142,7 @@ class TestGetProjectRoots(TankTestBase):
         root_file.close()
         # We should get a TankError if we don't have a primary storage in a
         # multi-roots file.
-        with self.assertRaisesRegex(TankError, "Could not identify a default storage"):
+        with six.assertRaisesRegex(self, TankError, "Could not identify a default storage"):
             pc = tank.pipelineconfig_factory.from_path(self.project_root)
         # Only keep the master storage
         del new_roots["publish"]

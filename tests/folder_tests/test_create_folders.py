@@ -11,6 +11,9 @@
 import copy
 import os
 import shutil
+
+import six
+
 from tank import TankError
 from tank import path_cache
 from tank import folder
@@ -996,7 +999,7 @@ class TestFolderCreationEdgeCases(TankTestBase):
 
         self.assertEqual(self.path_cache.get_paths("Shot", self.shot["id"], False), [])
 
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankError,
             "Folder creation aborted.*unregister_folders",
             folder.process_filesystem_structure,
@@ -1025,7 +1028,7 @@ class TestFolderCreationEdgeCases(TankTestBase):
         # rename the shot
         self.shot["code"] = "XYZ"
 
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankError,
             "Folder creation aborted.*unregister_folders",
             folder.process_filesystem_structure,
@@ -1051,7 +1054,7 @@ class TestFolderCreationEdgeCases(TankTestBase):
         )
         shutil.move(shot_path, renamed_shot_path)
 
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankError,
             "Folder creation aborted.*unregister_folders",
             folder.process_filesystem_structure,

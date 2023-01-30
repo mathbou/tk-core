@@ -548,19 +548,19 @@ class TestIntegerKey(ShotgunTestBase):
             format_spec="03",
         )
         # Make sure than an error is raised when wrong types are passed in.
-        with self.assertRaisesRegex(TankError, "is not of type boolean"):
+        with six.assertRaisesRegex(self, TankError, "is not of type boolean"):
             IntegerKey("version_number", strict_matching=1)
 
-        with self.assertRaisesRegex(TankError, "is not of type string"):
+        with six.assertRaisesRegex(self, TankError, "is not of type string"):
             IntegerKey("version_number", format_spec=1)
 
         # Make sure that if the user specifies strict_matching with no format
         # there is an error
         error_regexp = "strict_matching can't be set"
-        with self.assertRaisesRegex(TankError, error_regexp):
+        with six.assertRaisesRegex(self, TankError, error_regexp):
             IntegerKey("version_number", strict_matching=False)
 
-        with self.assertRaisesRegex(TankError, error_regexp):
+        with six.assertRaisesRegex(self, TankError, error_regexp):
             IntegerKey("version_number", strict_matching=True)
 
         # We support 4 format_spec values:
@@ -572,27 +572,27 @@ class TestIntegerKey(ShotgunTestBase):
         IntegerKey("version_number", format_spec="01")
 
         # Make sure invalid formats are caught
-        with self.assertRaisesRegex(TankError, "format_spec can't be empty"):
+        with six.assertRaisesRegex(self, TankError, "format_spec can't be empty"):
             IntegerKey("version_number", format_spec="")
 
         error_regexp = "has to either be"
         # We don't support the sign option.
-        with self.assertRaisesRegex(TankError, error_regexp):
+        with six.assertRaisesRegex(self, TankError, error_regexp):
             IntegerKey("version_number", format_spec=" 3", strict_matching=False)
 
-        with self.assertRaisesRegex(TankError, error_regexp):
+        with six.assertRaisesRegex(self, TankError, error_regexp):
             # Should throw because the padding number is not non zero.
             IntegerKey("version_number", format_spec="00")
 
-        with self.assertRaisesRegex(TankError, error_regexp):
+        with six.assertRaisesRegex(self, TankError, error_regexp):
             # Should throw because it is not a non zero positive integer
             IntegerKey("version_number", format_spec="0")
 
-        with self.assertRaisesRegex(TankError, error_regexp):
+        with six.assertRaisesRegex(self, TankError, error_regexp):
             # Should throw because the padding caracter is invalid
             IntegerKey("version_number", format_spec="a0")
 
-        with self.assertRaisesRegex(TankError, error_regexp):
+        with six.assertRaisesRegex(self, TankError, error_regexp):
             # Should throw because the padding size is not a number.
             IntegerKey("version_number", format_spec="0a")
 
@@ -662,13 +662,13 @@ class TestIntegerKey(ShotgunTestBase):
         :param error_msg: Text that partially matches the error message.
         """
         # Should fail because not a number
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("aaaa")
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("0a")
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("a0")
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("aa")
 
     def _test_strict_matching(self, padding_char):
@@ -702,24 +702,24 @@ class TestIntegerKey(ShotgunTestBase):
         error_msg = "does not match format spec"
 
         # It should not match a string with too few digits
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("1")
 
         # It should not match a template with too many digits that are all zero because that would
         # lossy. (there are more zeros than the format spec can rebuild)
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("0000")
 
         # It should not match negative numbers either
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("-1000")
 
         # It should not match baddly padded numbers
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("0100")
 
         # It should not match negative values
-        with self.assertRaisesRegex(TankError, error_msg):
+        with six.assertRaisesRegex(self, TankError, error_msg):
             key.value_from_str("-01")
 
         self._test_nan(key, error_msg)
@@ -1189,19 +1189,19 @@ class TestTimestampKey(ShotgunTestBase):
         TimestampKey("name", format_spec="%Y-%m-%d")
 
         # format_spec has to be a string.
-        with self.assertRaisesRegex(TankError, "is not of type string or None"):
+        with six.assertRaisesRegex(self, TankError, "is not of type string or None"):
             TimestampKey("name", default=1)
 
         # format_spec has to be a string.
-        with self.assertRaisesRegex(TankError, "is not of type string"):
+        with six.assertRaisesRegex(self, TankError, "is not of type string"):
             TimestampKey("name", format_spec=1)
 
         # Date that to be a valid time.
-        with self.assertRaisesRegex(TankError, "Invalid string"):
+        with six.assertRaisesRegex(self, TankError, "Invalid string"):
             TimestampKey("name", default="00-07-2015", format_spec="%d-%m-%Y")
 
         # Date that to be a valid time.
-        with self.assertRaisesRegex(TankError, "Invalid string"):
+        with six.assertRaisesRegex(self, TankError, "Invalid string"):
             TimestampKey("name", default="not_a_date")
 
     def test_str_from_value(self):
@@ -1230,14 +1230,14 @@ class TestTimestampKey(ShotgunTestBase):
         """
         key = TimestampKey("test")
         # bad format
-        with self.assertRaisesRegex(TankError, "Invalid string"):
+        with six.assertRaisesRegex(self, TankError, "Invalid string"):
             key.value_from_str("1 2 3")
         # out of bound values
-        with self.assertRaisesRegex(TankError, "Invalid string"):
+        with six.assertRaisesRegex(self, TankError, "Invalid string"):
             key.value_from_str("2015-06-33-21-20-30")
 
         # Too much data
-        with self.assertRaisesRegex(TankError, "Invalid string"):
+        with six.assertRaisesRegex(self, TankError, "Invalid string"):
             key.value_from_str(self._datetime_string + "bad date")
 
     def test_bad_value(self):
@@ -1245,7 +1245,7 @@ class TestTimestampKey(ShotgunTestBase):
         Test with values that are not supported.
         """
         key = TimestampKey("test")
-        with self.assertRaisesRegex(TankError, "Invalid type"):
+        with six.assertRaisesRegex(self, TankError, "Invalid type"):
             key.str_from_value(1)
 
     @patch("tank.templatekey.TimestampKey._TimestampKey__get_current_time")

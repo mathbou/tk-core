@@ -13,6 +13,8 @@ from __future__ import with_statement
 import itertools
 import os
 import sys
+
+import six
 from mock import patch, Mock
 import sgtk
 from sgtk.util import ShotgunPath
@@ -1056,7 +1058,7 @@ class TestResolveWithFilter(TestResolverBase):
         """
         Resolve a non-existent pipeline configuration by id should fail.
         """
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             sgtk.bootstrap.TankBootstrapError, "Pipeline configuration with id"
         ):
             self.resolver.resolve_shotgun_configuration(
@@ -1162,7 +1164,7 @@ class TestErrorHandling(TestResolverBase):
             {ShotgunPath.get_shotgun_storage_key(): None},
         )
 
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             sgtk.bootstrap.TankBootstrapError,
             "The SG pipeline configuration with id %s has no source location specified for "
             "your operating system." % pc_id,
@@ -1209,7 +1211,7 @@ class TestErrorHandling(TestResolverBase):
         ).as_shotgun_dict()
         expected_descriptor_dict["type"] = "path"
 
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             sgtk.bootstrap.TankBootstrapError,
             "Installed pipeline configuration '.*' does not exist on disk!",
         ):

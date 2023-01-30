@@ -19,6 +19,8 @@ import tempfile
 import shutil
 import stat
 
+import six
+
 import sgtk
 from tank.errors import TankError
 from tank.util import is_windows
@@ -51,7 +53,7 @@ class TestPipelineConfig(TankTestBase):
         push_cmd = self.tk.get_command("push_configuration")
         # Check that we get an error if trying to push while having a single
         # pipeline config
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankError, "Only one pipeline config", push_cmd.execute, {"target_id": 666}
         )
         # Clone the current pipeline config
@@ -70,14 +72,14 @@ class TestPipelineConfig(TankTestBase):
             }
         )
         # Check we can't push on ourself
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankError,
             "The target pipeline config id must be different from the current one",
             push_cmd.execute,
             {"target_id": pc.get_shotgun_id()},
         )
         # Check we can't push with an invalid target id
-        self.assertRaisesRegex(
+        six.assertRaisesRegex(self,
             TankError,
             "Id 6666 is not a valid pipeline config id",
             push_cmd.execute,
@@ -121,7 +123,7 @@ class TestPipelineConfig(TankTestBase):
                 sgtk.sgtk_from_path(temp_pc_dir)
             else:
                 # Pushing should raise an error on Linux/Osx
-                self.assertRaisesRegex(
+                six.assertRaisesRegex(self,
                     TankError,
                     "Permission denied|Access is denied",
                     push_cmd.execute,
@@ -145,7 +147,7 @@ class TestPipelineConfig(TankTestBase):
         # and the test should pass.
         # https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/
         if getattr(os, "symlink", None) is None:
-            self.assertRaisesRegex(
+            six.assertRaisesRegex(self,
                 TankError,
                 "Symbolic links are not supported",
                 push_cmd.execute,

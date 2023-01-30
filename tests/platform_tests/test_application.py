@@ -499,7 +499,7 @@ class TestExecuteHook(TestApplication):
         """
         app = self.engine.apps["test_app"]
         self.assertTrue(app.execute_hook("test_hook_framework", dummy_param=True))
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankError,
             "but no framework with instance name 'test_framework_v2.x.x' can be found",
         ):

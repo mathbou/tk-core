@@ -13,6 +13,8 @@ from __future__ import with_statement
 import uuid
 import os
 import sys
+
+import six
 from mock import patch
 
 from tank_test.tank_test_base import setUpModule  # noqa
@@ -397,7 +399,7 @@ class TestInvalidInstalledConfiguration(TankTestBase):
             )
         )
 
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             sgtk.bootstrap.TankBootstrapError, "Cannot find required system file"
         ):
             config.status()

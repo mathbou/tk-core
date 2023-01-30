@@ -12,6 +12,7 @@ from __future__ import with_statement
 
 import os
 
+import six
 from tank_test.tank_test_base import ShotgunTestBase
 from tank_test.tank_test_base import setUpModule  # noqa
 
@@ -101,7 +102,7 @@ class UserSettingsTests(ShotgunTestBase):
         self.write_toolkit_ini_file(Custom={"valid": "ON", "invalid": "L"})
 
         self.assertEqual(UserSettings().get_boolean_setting("Custom", "valid"), True)
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankError,
             "Invalid value 'L' in '.*' for setting 'invalid' in section 'Custom': expecting one of .*.",
         ):
@@ -130,7 +131,7 @@ class UserSettingsTests(ShotgunTestBase):
 
         self.assertEqual(UserSettings().get_integer_setting("Custom", "valid"), 1)
         self.assertEqual(UserSettings().get_integer_setting("Custom", "also_valid"), -1)
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankError,
             "Invalid value 'L' in '.*' for setting 'invalid' in section 'Custom': expecting integer.",
         ):
@@ -157,9 +158,9 @@ class UserSettingsTests(ShotgunTestBase):
         Test environment variables being set to files that don't exist.
         """
         with patch.dict(os.environ, {"SGTK_PREFERENCES_LOCATION": "/a/b/c"}):
-            with self.assertRaisesRegex(EnvironmentVariableFileLookupError, "/a/b/c"):
+            with six.assertRaisesRegex(self, EnvironmentVariableFileLookupError, "/a/b/c"):
                 UserSettings()
 
         with patch.dict(os.environ, {"SGTK_DESKTOP_CONFIG_LOCATION": "/d/e/f"}):
-            with self.assertRaisesRegex(EnvironmentVariableFileLookupError, "/d/e/f"):
+            with six.assertRaisesRegex(self, EnvironmentVariableFileLookupError, "/d/e/f"):
                 UserSettings()

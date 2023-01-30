@@ -692,20 +692,20 @@ class TestFromEntity(TestContext):
         """
         Test exception are raised if bad entities are used.
         """
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankError, "Cannot create a context from an entity type 'None'"
         ):
             context.from_entity(self.tk, None, 7777)
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankError, "Cannot create a context from an entity id set to 'None'"
         ):
             context.from_entity(self.tk, "Task", None)
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankError, "Unable to locate Task with id -1 in ShotGrid"
         ):
             context.from_entity(self.tk, "Task", -1)
         # PublishedFiles go through some dedicated code.
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankError, "Entity PublishedFile with id -1 not found in ShotGrid!"
         ):
             context.from_entity(self.tk, "PublishedFile", -1)

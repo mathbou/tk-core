@@ -12,6 +12,8 @@ from __future__ import with_statement
 import os
 import itertools
 
+import six
+
 import tank
 from tank_test.tank_test_base import ShotgunTestBase, temp_env_var
 from tank_test.tank_test_base import setUpModule  # noqa
@@ -146,7 +148,7 @@ class Includes(object):
             """
             Make sure an exception is raised when the include doesn't exist.
             """
-            with self.assertRaisesRegex(tank.TankError, "Include resolve error"):
+            with six.assertRaisesRegex(self, tank.TankError, "Include resolve error"):
                 self._resolve_includes("dead/path/to/a/file")
 
         @patch("os.path.exists", return_value=True)

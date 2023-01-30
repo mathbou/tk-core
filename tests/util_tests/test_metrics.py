@@ -32,7 +32,7 @@ import os
 import json
 import time
 import threading
-import unittest2
+import unittest
 import six
 from six.moves import urllib
 
@@ -40,7 +40,7 @@ from six.moves import urllib
 if six.PY2:
     LINUX_DISTRIBUTION_FUNCTION = "platform.linux_distribution"
 else:
-    LINUX_DISTRIBUTION_FUNCTION = "tank_vendor.distro.linux_distribution"
+    LINUX_DISTRIBUTION_FUNCTION = "distro.linux_distribution"
 
 
 class TestEventMetric(ShotgunTestBase):
@@ -207,7 +207,7 @@ class TestMetricsDispatchWorkerThread(TankTestBase):
         tank.set_authenticated_user(None)
 
         # Prevents an actual connection to a Shotgun site.
-        self._server_caps_mock = patch("tank_vendor.shotgun_api3.Shotgun.server_caps")
+        self._server_caps_mock = patch("shotgun_api3.Shotgun.server_caps")
         self._server_caps_mock.start()
         self.addCleanup(self._server_caps_mock.stop)
 
@@ -231,7 +231,7 @@ class TestMetricsDispatchWorkerThread(TankTestBase):
         self._create_engine()
 
         # Patch & Mock the `urlopen` method
-        self._urlopen_mock = patch("tank_vendor.six.moves.urllib.request.urlopen")
+        self._urlopen_mock = patch("six.moves.urllib.request.urlopen")
         self._mocked_method = self._urlopen_mock.start()
 
     def setUp(self):
@@ -781,7 +781,7 @@ class TestMetricsDispatchWorkerThread(TankTestBase):
         self._urlopen_mock.stop()
         self._urlopen_mock = None
         self._urlopen_mock = patch(
-            "tank_vendor.six.moves.urllib.request.urlopen",
+            "six.moves.urllib.request.urlopen",
             side_effect=TestMetricsDispatchWorkerThread._mocked_urlopen_for_test_maximum_batch_size,
         )
         self._mocked_method = self._urlopen_mock.start()
@@ -845,7 +845,7 @@ class TestMetricsDispatchWorkerThread(TankTestBase):
         self._urlopen_mock.stop()
         self._urlopen_mock = None
         self._urlopen_mock = patch(
-            "tank_vendor.six.moves.urllib.request.urlopen",
+            "six.moves.urllib.request.urlopen",
             side_effect=TestMetricsDispatchWorkerThread._mocked_urlopen_for_test_maximum_batch_size,
         )
         self._mocked_method = self._urlopen_mock.start()
@@ -885,7 +885,7 @@ class TestMetricsDispatchWorkerThread(TankTestBase):
         self.assertTrue(avg_time_ms < max_interval)
 
 
-class TestMetricsQueueSingleton(unittest2.TestCase):
+class TestMetricsQueueSingleton(unittest.TestCase):
     """Cases testing tank.util.metrics.MetricsQueueSingleton class."""
 
     def test_singleton(self):
@@ -1242,7 +1242,7 @@ class TestBundleMetrics(TankTestBase):
 from tank.util.metrics import PlatformInfo
 
 
-class TestPlatformInfo(unittest2.TestCase):
+class TestPlatformInfo(unittest.TestCase):
     def setUp(self):
         super(TestPlatformInfo, self).setUp()
         # reset un-cache PlatformInfo cached value

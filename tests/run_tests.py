@@ -33,19 +33,15 @@ core_python_path = os.path.abspath(
 )
 print("")
 print("Adding tank location to python_path: %s" % core_python_path)
-sys.path = [core_python_path] + sys.path
+sys.path.append(core_python_path)
 
 # prepend tank_vendor location to PYTHONPATH to make sure we are running
 # the tests against the vendor libs, not local libs on the machine
 test_python_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "python"))
 print("Adding tests/python location to python_path: %s" % test_python_path)
-sys.path = [test_python_path] + sys.path
+sys.path.append(test_python_path)
 
-test_python_path = os.path.join(test_python_path, "third_party")
-print("Adding tests/python/third_party location to python_path: %s" % test_python_path)
-sys.path = [test_python_path] + sys.path
-
-import unittest2 as unittest
+import unittest
 
 
 class TankTestRunner(object):

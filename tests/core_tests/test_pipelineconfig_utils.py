@@ -12,6 +12,7 @@ import os
 import inspect
 import sys
 
+import six
 from mock import patch
 
 import sgtk
@@ -214,7 +215,7 @@ class TestPipelineConfigUtils(ShotgunTestBase):
             )
 
         # Test when the interpreter file is missing
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankFileDoesNotExistError, "No interpreter file for"
         ):
             pipelineconfig_utils.get_python_interpreter_for_config(
@@ -290,7 +291,7 @@ class TestPipelineConfigUtils(ShotgunTestBase):
         studio_core_with_missing_interpreter_file_location = self._create_studio_core(
             "studio_core_with_missing_interpreter_file"
         )
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankFileDoesNotExistError, "No interpreter file for"
         ):
             pipelineconfig_utils.get_python_interpreter_for_config(
@@ -319,7 +320,7 @@ class TestPipelineConfigUtils(ShotgunTestBase):
             "config_with_no_core_file"
         )
 
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankFileDoesNotExistError, "is missing a core location file"
         ):
             pipelineconfig_utils.get_python_interpreter_for_config(
@@ -338,7 +339,7 @@ class TestPipelineConfigUtils(ShotgunTestBase):
             pipelineconfig_utils.get_core_path_for_config(config_root), None
         )
 
-        with self.assertRaisesRegex(
+        with six.assertRaisesRegex(self,
             TankFileDoesNotExistError, "without a localized core is missing a core"
         ):
             pipelineconfig_utils.get_python_interpreter_for_config(config_root)
