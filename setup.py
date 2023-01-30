@@ -55,17 +55,19 @@ def requirements():
         "six==1.13.0",
         "shotgun_api3==3.3.5",
         "httplib2==0.21.0",
-        "distro==1.8.0" # TODO only for linux
+
     ]
     if sys.version_info.major < 3:
         requirements_.extend([
             "ruamel.yaml==0.16.13",
             "PyYAML==5.4.1",
+            "distro==1.6.0"  # TODO only for linux
         ])
     else:
         requirements_.extend([
             "ruamel.yaml==0.17.21",
             "PyYAML==6.0",
+            "distro==1.8.0"  # TODO only for linux
         ])
 
     return requirements_
