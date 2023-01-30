@@ -46,7 +46,7 @@ class Template(object):
         ordered_keys = []
         # regular expression to find key names
         regex = r"(?<={)%s(?=})" % constants.TEMPLATE_KEY_NAME_REGEX
-        key_names = re.findall(regex, definition)
+        key_names = sgre.findall(regex, definition)
         for key_name in key_names:
             key = keys.get(key_name)
             if key is None:
@@ -330,7 +330,7 @@ class Template(object):
 
         """
         # split definition by optional sections
-        tokens = re.split(r"(\[[^]]*\])", definition)
+        tokens = sgre.split(r"(\[[^]]*\])", definition)
 
         # seed with empty string
         definitions = [""]
@@ -341,7 +341,7 @@ class Template(object):
                 continue
             if token.startswith("["):
                 # check that optional contains a key
-                if not re.search("{*%s}" % constants.TEMPLATE_KEY_NAME_REGEX, token):
+                if not sgre.search("{*%s}" % constants.TEMPLATE_KEY_NAME_REGEX, token):
                     raise TankError(
                         'Optional sections must include a key definition. Token: "%s" Template: %s'
                         % (token, self)
@@ -350,10 +350,10 @@ class Template(object):
                 # Add definitions skipping this optional value
                 temp_definitions = definitions[:]
                 # strip brackets from token
-                token = re.sub(r"[\[\]]", "", token)
+                token = sgre.sub(r"[\[\]]", "", token)
 
             # check non-optional contains no dangleing brackets
-            if re.search(r"[\[\]]", token):
+            if sgre.search(r"[\[\]]", token):
                 raise TankError(
                     "Square brackets are not allowed outside of optional section definitions."
                 )
@@ -379,13 +379,13 @@ class Template(object):
         for old_name, new_name in substitutions:
             old_def = r"{%s}" % old_name
             new_def = r"{%s}" % new_name
-            definition = re.sub(old_def, new_def, definition)
+            definition = sgre.sub(old_def, new_def, definition)
         return definition
 
     def _clean_definition(self, definition):
         # Create definition with key names as strings with no format, enum or default values
         regex = r"{(%s)}" % constants.TEMPLATE_KEY_NAME_REGEX
-        cleaned_definition = re.sub(regex, r"%(\g<1>)s", definition)
+        cleaned_definition = sgre.sub(regex, r"%(\g<1>)s", definition)
         return cleaned_definition
 
     def _calc_static_tokens(self, definition):
@@ -399,7 +399,7 @@ class Template(object):
             os.path.join(self._prefix, definition) if definition else self._prefix
         )
         regex = r"{%s}" % constants.TEMPLATE_KEY_NAME_REGEX
-        tokens = re.split(regex, expanded_definition.lower())
+        tokens = sgre.split(regex, expanded_definition.lower())
         # Remove empty strings
         return [x for x in tokens if x]
 
