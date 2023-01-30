@@ -87,7 +87,6 @@ finally:
 # Recursively discover all packages in python folder, excluding any tests
 packages =["tank/hooks"]
 packages.extend(find_packages(where="python", exclude=("*.tests", "*.tests.*", "tests.*", "tests", "tank_vendor*")))
-packages.extend(find_packages(where="python", include=("tank_vendor*"), exclude=("*.tests", "*.tests.*", "tests.*", "tests", "tank_vendor.*")))
 
 setup(
     name="sgtk",
@@ -98,8 +97,7 @@ setup(
     url="https://github.com/shotgunsoftware/tk-core",
     install_requires=requirements(),
     license=license,
-
-
+    py_modules=["tank_vendor/__init__"],
     packages=packages,
     # Additional data which must sit in packages folders
     package_data={
