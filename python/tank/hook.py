@@ -33,12 +33,11 @@ def get_core_hook_location():
             "hooks",  # ./site-packages/tank/hooks
         )
     )
-    if not all([os.path.exists(hook_location), os.path.isdir(hook_location)]):
+    if not os.path.exists(hook_location) or not os.path.isdir(hook_location):
         # Fallback on original repo hook location
         hook_location = os.path.normpath(
             os.path.join(
-                os.path.dirname(__file__),  # ./python/tank/bootstrap
-                "..",  # ./python/tank
+                os.path.dirname(__file__),  # ./python/tank
                 "..",  # ./python
                 "..",  # ./
                 "hooks",  # ./hooks
